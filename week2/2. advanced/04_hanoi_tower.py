@@ -57,11 +57,14 @@
 """
 
 
-def hanoi_count(n: int) -> int:
-    """N 개의 원반을 옮기는 데 필요한 최소 이동 횟수( = 2^N - 1) 를 반환"""
-    # TODO: 2^N - 1 을 정수로 반환하세요.
-    pass
-
+answer = []
+def hanoi(n, start, end, mid):
+    if n == 1:
+        answer.append((start, end))
+        return None
+    hanoi(n-1, start, mid, end)
+    answer.append((start, end))
+    hanoi(n-1, mid, end, start)
 
 def hanoi_moves(n: int) -> list:
     """
@@ -73,8 +76,18 @@ def hanoi_moves(n: int) -> list:
     """
     # TODO: N > 20 또는 N == 0 인 경우 [] 를 반환하세요.
     # TODO: 그 외에는 재귀로 이동 순서를 만들어 반환하세요.
-    pass
+    if n>20 or n==0:
+        return []
+    answer.clear()
+    hanoi(n, 1, 3, 2)
+    return answer
 
+def hanoi_count(n: int) -> int:
+    """N 개의 원반을 옮기는 데 필요한 최소 이동 횟수( = 2^N - 1) 를 반환"""
+    # TODO: 2^N - 1 을 정수로 반환하세요.
+    if n<=0 or n>1000:
+        return 0
+    return 2**n - 1 
 
 if __name__ == "__main__":
     print("[테스트 1] N=0 (원반 없음, 옮길 것 없음)")
@@ -91,7 +104,7 @@ if __name__ == "__main__":
     print(f"  최소 이동 횟수: {hanoi_count(3)}")
     print("  이동 순서:")
     for s, d in hanoi_moves(3):
-        print(f"    {s} -> {d}")
+        print(f" {s} -> {d}")
     print()
 
     print("[테스트 4] N=20 (이동 순서 반환의 상한)")
