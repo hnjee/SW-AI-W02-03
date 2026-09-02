@@ -33,18 +33,35 @@ def binary_search(arr, target):
     Returns:
         target의 인덱스 (없으면 -1)
     """
-    left = 0
-    right = len(arr) - 1
+    start = 0
+    end = len(arr)-1 
+    mid = 0
     
-    # TODO: left가 right보다 작거나 같을 때까지 반복
-    ## 중간 인덱스 계산
-    ## arr[mid]와 target 비교
-    ## 같으면 mid 반환
-    ## target이 더 크면 left = mid + 1
-    ## target이 더 작으면 right = mid - 1
-    pass
-    
-    return -1
+    while start<=end: #start==end일때까지 확인해야함 
+        mid = (start + end) // 2
+        if arr[mid] == target: 
+            return mid  
+        elif arr[mid] < target:
+            start = mid + 1
+        else: #arr[mid] > target:
+            end = mid - 1 
+
+    return -1 
+
+
+# 재귀 버전 
+def binary_search_recursion(arr, target, start, end):
+    if start > end:
+        return -1
+
+    mid = (start + end) // 2
+    if target == arr[mid]:
+        return mid
+    elif target > arr[mid]:
+        return binary_search_recursion(arr, target, mid+1, end)
+    else: #target < arr[mid]
+        return binary_search_recursion(arr, target, start, mid-1)
+
 
 # 테스트 케이스
 if __name__ == "__main__":
@@ -60,7 +77,7 @@ if __name__ == "__main__":
     # 테스트 케이스 2
     arr2 = [2, 4, 6, 8, 10, 12, 14, 16, 18, 20]
     target2 = 14
-    result2 = binary_search(arr2, target2)
+    result2 = binary_search_recursion(arr2, target2, 0, len(arr2)-1)
     print(f"배열: {arr2}")
     print(f"찾는 값: {target2}")
     print(f"결과: 인덱스 {result2}")
