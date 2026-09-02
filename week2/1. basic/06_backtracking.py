@@ -120,20 +120,19 @@ def combinations(n: int, k: int) -> list:
         모든 조합을 담은 리스트(예: [[1,2], [1,3], ...])
     """
     result = []  # 완성된 조합을 모아 둘 곳
-    current = []
 
     def backtrack(current, start):
-        current_len = len(current)
-        if current_len == k:
+        if len(current) == k:
             result.append(current[:])
             return 
+        
         for i in range(start, n+1):
-            current.append(i)
+            current.append(i) 
             backtrack(current, i+1)
             current.pop()
         return
                     
-    backtrack(current, 1)
+    backtrack([], 1)
     return result
 
 
