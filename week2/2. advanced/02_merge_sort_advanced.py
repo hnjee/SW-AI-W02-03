@@ -22,36 +22,37 @@
 - 정렬된 두 부분을 병합
 """
 
-#방식 2: 인덱스 범위만 넘김 -> merge() 안에서 리스트 생성 
-def merge(arr, start, mid, end):
+#방식 3: 인덱스 범위 + temp 배열 넘기기 
+def merge(arr, start, mid, end, temp):
     """
     두 개의 정렬된 부분 배열을 병합하는 함수
     """
-    left_list, right_list = arr[start:mid+1], arr[mid+1: end+1]
-    i, j = 0, 0
-    arr_index = start
+    i, j = start, mid+1
+    temp_index = start
 
-    while i < len(left_list) and j < len(right_list):
-        if left_list[i] <= right_list[j]: 
-            arr[arr_index] = left_list[i] 
+    while i <= mid and j <= end:
+        if arr[i] <= arr[j]: 
+            temp[temp_index] = arr[i]
             i += 1
-            arr_index += 1 
-        else:
-            arr[arr_index] = right_list[j]
+        elif arr[j] < arr[i]:
+            temp[temp_index] = arr[j]
             j += 1
-            arr_index += 1 
+        temp_index += 1 
 
-    while i < len(left_list):
-        arr[arr_index] = left_list[i]
+    while i <= mid:
+        temp[temp_index] = arr[i]
         i += 1
-        arr_index += 1 
+        temp_index += 1 
 
-    while j < len(right_list):
-        arr[arr_index] = right_list[j]
+    while j <= end:
+        temp[temp_index] = arr[j]
         j += 1
-        arr_index += 1
+        temp_index += 1
 
-def merge_sort_helper(arr, start, end):
+    for x in range(start, end+1):
+        arr[x] = temp[x]        
+
+def merge_sort_helper(arr, start, end, temp):
     """
     머지 정렬 재귀 함수
     
@@ -65,11 +66,11 @@ def merge_sort_helper(arr, start, end):
 
     #분할 
     mid = (start + end) // 2
-    merge_sort_helper(arr, start, mid)
-    merge_sort_helper(arr, mid+1, end)
+    merge_sort_helper(arr, start, mid, temp)
+    merge_sort_helper(arr, mid+1, end, temp)
 
     #병합 
-    merge(arr, start, mid, end)
+    merge(arr, start, mid, end, temp)
 
     return
 
@@ -84,7 +85,8 @@ def merge_sort(arr):
         정렬된 배열
     """
     if len(arr) > 1:
-        merge_sort_helper(arr, 0, len(arr) - 1)
+        temp = [0] * len(arr)  
+        merge_sort_helper(arr, 0, len(arr) - 1, temp)
     return arr
 
 # 테스트 케이스
