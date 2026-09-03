@@ -40,14 +40,29 @@ def manage_grades(students):
     Returns:
         평균, 최고점 학생 이름, 최고점
     """
-    # TODO: 평균 점수 계산
-    pass
+    scores = students.values()
+    avg = sum(scores)/len(students)
+    top_student = max(students, key=students.get)
+    top_score = max(scores)
+    return avg, top_student, top_score
+
+def manage_grades_2(students):
+    """
+    학생 성적 관리 시스템
     
+    Args:
+        students: {이름: 점수} 딕셔너리
     
-    # TODO: 최고 점수 학생 찾기
-    pass
-    
-    return average, top_student, top_score
+    Returns:
+        평균, 최고점 학생 이름, 최고점
+    """
+    total, top_student, top_score = 0, 0, 0
+    for std, score  in students.items():
+        total += score
+        if score > top_score:
+            top_score = score
+            top_student = std    
+    return total/len(students), top_student, top_score
 
 def find_student_score(students, name):
     """
@@ -61,7 +76,7 @@ def find_student_score(students, name):
         점수 (없으면 None)
     """
     # TODO: students에서 name 찾기
-    pass
+    return students.get(name)
 
 # 테스트 케이스
 if __name__ == "__main__":
@@ -72,7 +87,9 @@ if __name__ == "__main__":
         "Charlie": 78,
         "David": 95
     }
-    
+
+    print(min(students1,key = students1.get))
+
     print("=== 학생 성적 관리 ===")
     avg, top_name, top_score = manage_grades(students1)
     print(f"평균 점수: {avg}")
@@ -89,5 +106,6 @@ if __name__ == "__main__":
     search_name2 = "Eve"
     score2 = find_student_score(students1, search_name2)
     print(f"{search_name2}의 점수: {score2}")
+
 
 
