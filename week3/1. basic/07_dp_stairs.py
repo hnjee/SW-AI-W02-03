@@ -36,25 +36,14 @@ DP 문제 풀이 순서:
 """
 
 def climb_stairs(n):
-    """
-    계단 오르기 (상향식 DP)
+    if n < 2:
+        return n
     
-    Args:
-        n: 계단의 수
-    
-    Returns:
-        n번째 계단까지 오르는 방법의 수
-    """
-    # TODO: 특별한 경우 처리
-    pass
-    
-    
-    # TODO: dp 배열 생성 및 초기화
-    pass
-    
-    # TODO: 작은 문제부터 차례로 계산
-    pass
-    
+    dp = [0] * (n+1)
+    dp[0] = 1
+    dp[1] = 1
+    for i in range(2, n+1):
+        dp[i] = dp[i-1] + dp[i-2]
     return dp[n]
 
 # 테스트 케이스
