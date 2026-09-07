@@ -33,29 +33,21 @@ BFS: [0, 1, 2, 3]
 from collections import deque
 
 def bfs(graph, start):
-    """
-    너비 우선 탐색
-    
-    Args:
-        graph: 그래프 딕셔너리
-        start: 시작 정점
-    
-    Returns:
-        방문 순서 리스트
-    """
-    visited = []
-    
-    # TODO: 큐 생성 및 시작 정점 추가
-    ## 방문한 정점 집합
-    pass
+    answer = []
+    visited = [False] * len(graph)
 
-    # TODO: 큐가 빌 때까지 반복
-    ## 큐에서 정점 꺼내기
-    ## 인접한 정점들 확인
-    ## 방문하지 않은 정점이면 큐에 추가
-    pass
-    
-    return visited
+    que = deque()
+    que.append(start)
+    visited[start] = True
+
+    while len(que) > 0:
+        node = que.popleft()
+        answer.append(node)
+        for x in graph[node]:
+            if not visited[x]: 
+                que.append(x)
+                visited[x] = True
+    return answer
 
 # 테스트 케이스
 if __name__ == "__main__":
@@ -71,4 +63,7 @@ if __name__ == "__main__":
     result = bfs(graph, 0)
     print(f"시작 정점: 0")
     print(f"방문 순서: {result}")
-
+    num_list = [1,3,4,5,2]
+    n = 3
+    list = num_list[n:]
+    list.extend(num_list[:n])
