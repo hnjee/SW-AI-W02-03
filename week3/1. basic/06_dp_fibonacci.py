@@ -75,7 +75,7 @@ def fibonacci_top_down(n, memo):
         return 0
     if n == 1:
         return 1
-    if memo[n] != 0:
+    if memo[n] is not None:
         return memo[n]
     memo[n] = fibonacci_top_down(n-1, memo) + fibonacci_top_down(n-2, memo)
     return memo[n]
@@ -84,7 +84,7 @@ def fibonacci_bottom_top(n):
     if n < 2:
         return n
     
-    memo = [0] * (n+1)
+    memo = [None] * (n+1)
     memo[0] = 0
     memo[1] = 1
 
@@ -97,10 +97,9 @@ def fibonacci_bottom_top(n):
 if __name__ == "__main__":
     # 테스트 케이스 1
     print("=== 피보나치 수열 (메모이제이션) ===")
-    memo = [0]*100
+    memo = [None]*100
     memo[0] = 0
     memo[1] = 1
-    memo[2] = 1
     for i in range(11):
         result = fibonacci_bottom_top(i)
         print(f"fib({i}) = {result}")
