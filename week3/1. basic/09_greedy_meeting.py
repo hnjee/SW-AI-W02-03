@@ -34,11 +34,9 @@ def select_meetings(meetings):
     """
     sorted_meeting = sorted(meetings, key = lambda x : x[1]) #종료시간 기준 정렬 
     selected = []
-    end_time = 0
     for i in range(len(sorted_meeting)):
-        if sorted_meeting[i][0] >= end_time:
+        if sorted_meeting[i][0] >= selected[-1][1]:
             selected.append(sorted_meeting[i])
-            end_time = sorted_meeting[i][1]
     return len(selected), selected
 
 # 테스트 케이스
