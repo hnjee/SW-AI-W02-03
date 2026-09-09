@@ -30,14 +30,9 @@ from collections import deque
 
 def topological_sort_bfs(vertices, edges):
     result = []
-    in_degree_dict = {} 
-    graph = {}
     que = deque()
-
-    # 인접 dict, 진입차수 dict 만들기 
-    for i in range(vertices):
-        graph[i] = []
-        in_degree_dict[i] = 0
+    graph = {i: [] for i in range(vertices)}          
+    in_degree_dict = {i: 0 for i in range(vertices)}   
         
     for x, y in edges:
         graph[x].append(y) # 인접 dict 만들기 
@@ -63,8 +58,28 @@ def topological_sort_bfs(vertices, edges):
     return result
 
 def topological_sort_dfs(vertices, edges):
+    graph = {i: [] for i in range(vertices)} #인접리스트 
+    for x, y in edges:
+        graph[x].append(y)
+    
+    visited = set() #내가 지금 이 노드를 한번 방문했나?
+    stack = [] #최종 순서 확정됐나?
 
-    return result
+    def dfs(node):
+        visited.add(node)
+        for adj in graph[node]:
+            if adj not in visited:
+                dfs(adj)
+        stack.append(node)
+
+    for i in range(vertices):
+        if i not in visited:
+            dfs(i)
+
+    if len(stack) < vertices:
+        raise ValueError("사이클이 존재합니다")
+        
+    return stack[::-1]  # 뒤집어서 반환
 
 # 테스트 케이스
 if __name__ == "__main__":
@@ -82,5 +97,5 @@ if __name__ == "__main__":
     print("  0(기초) → 2(응용)")
     print()
     
-    result = topological_sort_bfs(vertices, edges)
+    result = topological_sort_dfs(vertices, edges)
     print(f"수강 순서: {result}")
